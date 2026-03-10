@@ -1,0 +1,17 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Old generated report files (replaced by README auto-update)
+chart/TSA_Report_*.md
+
+# Claude internal session files
+.claude/
+
+# Environment / IDE
+.env
+.venv/
+*.egg-info/
+.idea/
+.vscode/

@@ -12,7 +12,7 @@
 | `test_update.py` | 仅测试统计，不联网 |
 | `data_scraper.py` | 网络抓取 + SQLite 读写 |
 | `data_processor.py` | DataFrame 转换（7日均线、排序键） |
-| `visualization.py` | 生成并保存三张 PNG 图表 |
+| `visualization.py` | 生成并保存三张 PNG 图表（精简版） |
 | `statistics.py` | 增长率计算 + Markdown 报告 |
 
 ---
@@ -84,24 +84,25 @@ jan_jun = filter_data_by_month_range(df, start_month=1, end_month=6)
 ## visualization.py
 
 生成图表并保存到指定目录（默认 `../chart`），不阻塞（使用 `plt.close()` 而非 `plt.show()`）。
+图表为运行时产物，默认由仓库根目录 `.gitignore` 忽略，不提交二进制 PNG。
 
 ```python
 from visualization import (
     create_7day_moving_average_chart,
-    create_yearly_comparison_chart,
     create_monthly_trend_chart,
+    create_recent_years_chart,
 )
 
 create_7day_moving_average_chart(processed_data, output_dir='../chart')
-create_yearly_comparison_chart(processed_data, output_dir='../chart')
 create_monthly_trend_chart(processed_data, output_dir='../chart')
+create_recent_years_chart(processed_data, output_dir='../chart')
 ```
 
 | 函数 | 输出文件 | 图表类型 |
 |------|----------|----------|
 | `create_7day_moving_average_chart` | `tsa_7day_moving_average.png` | 折线图，7日均线 |
-| `create_yearly_comparison_chart` | `tsa_yearly_comparison.png` | 散点图，原始日数据 |
 | `create_monthly_trend_chart` | `tsa_monthly_trend.png` | 折线图，月均值 |
+| `create_recent_years_chart` | `tsa_recent_years.png` | 折线图，近3年7日均线 |
 
 ---
 
@@ -136,7 +137,7 @@ report_path = generate_markdown_report(stats, '../chart')  # 写 Markdown 文件
 ```bash
 python data_scraper.py    # 抓取最新数据并打印前几行
 python data_processor.py  # 处理数据并打印记录数
-python visualization.py   # 生成三张图表
+python visualization.py   # 生成三张图表（精简后）
 python statistics.py      # 生成并打印统计报告
 python test_update.py     # 完整统计流程（不联网）
 ```

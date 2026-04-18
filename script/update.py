@@ -23,7 +23,6 @@ from data_scraper import (
 from data_processor import prepare_data_for_visualization
 from visualization import (
     create_7day_moving_average_chart,
-    create_yearly_comparison_chart,
     create_monthly_trend_chart,
     create_recent_years_chart,
 )
@@ -54,7 +53,6 @@ def run_pipeline(all_data, current_year, chart_dir):
     print("\n步骤: 生成可视化图表...")
     os.makedirs(chart_dir, exist_ok=True)
     create_7day_moving_average_chart(processed_data, chart_dir)
-    create_yearly_comparison_chart(processed_data, chart_dir)
     create_monthly_trend_chart(processed_data, chart_dir)
     create_recent_years_chart(processed_data, chart_dir)
     print("所有图表已生成!")

@@ -9,7 +9,7 @@
 ## 最新数据
 
 <!-- STATS_START -->
-> **数据截至** 2026-04-09 &nbsp;·&nbsp; **更新于** 2026-04-13
+> **数据截至** 2026-04-09 &nbsp;·&nbsp; **更新于** 2026-04-18
 
 ### 各年份数据概览
 
@@ -42,17 +42,13 @@
 
 ## 图表
 
-### 近 3 年趋势（散点 + 7 日均线）
-![近3年趋势](chart/tsa_recent_years.png)
+当前保留 3 张核心图，减少信息重复：
 
-### 历年 7 日移动平均对比
-![7日均线](chart/tsa_7day_moving_average.png)
+- `chart/tsa_recent_years.png`：近 3 年趋势（7 日均线）
+- `chart/tsa_7day_moving_average.png`：历年 7 日移动平均对比
+- `chart/tsa_monthly_trend.png`：月度季节性规律
 
-### 月度季节性规律
-![月度趋势](chart/tsa_monthly_trend.png)
-
-### 历年原始日数据对比
-![年度对比](chart/tsa_yearly_comparison.png)
+> 图表文件为本地自动生成产物，默认不纳入 Git 版本管理（见 `.gitignore`）。
 
 ---
 

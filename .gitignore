@@ -5,6 +5,7 @@ __pycache__/
 
 # Old generated report files (replaced by README auto-update)
 chart/TSA_Report_*.md
+chart/*.png
 
 # Claude internal session files
 .claude/

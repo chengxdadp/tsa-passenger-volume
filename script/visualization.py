@@ -84,48 +84,6 @@ def create_7day_moving_average_chart(processed_data, output_dir='../chart'):
     print(f"图表已保存到: {chart_path}")
 
 
-def create_yearly_comparison_chart(processed_data, output_dir='../chart'):
-    """
-    创建年度原始数据对比散点图
-
-    参数:
-    processed_data: 处理后的数据字典
-    output_dir: 输出目录
-    """
-    os.makedirs(output_dir, exist_ok=True)
-
-    fig, ax = plt.subplots(figsize=(16, 7))
-
-    sorted_years = sorted(processed_data.keys())
-    colors = _get_colors(len(sorted_years))
-
-    for color, year in zip(colors, sorted_years):
-        data = processed_data[year]
-        ax.scatter(
-            range(len(data)), data['Passenger_Numbers'],
-            label=year, alpha=0.55, s=8, color=color,
-        )
-
-    ax.set_title(
-        'TSA Daily Passenger Volumes — Yearly Comparison',
-        fontsize=15, fontweight='bold', pad=12,
-    )
-    ax.set_xlabel('Month-Day', fontsize=12)
-    ax.set_ylabel('Passengers', fontsize=12)
-    ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'{x/1e6:.1f}M'))
-    ax.grid(True, alpha=0.3)
-
-    reference_year = max(sorted_years, key=lambda k: len(processed_data[k]))
-    _set_xaxis_month_labels(ax, processed_data[reference_year])
-
-    _add_outside_legend(ax)
-
-    chart_path = os.path.join(output_dir, 'tsa_yearly_comparison.png')
-    fig.savefig(chart_path, dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    print(f"图表已保存到: {chart_path}")
-
-
 def create_monthly_trend_chart(processed_data, output_dir='../chart'):
     """
     创建月度平均客流趋势图
@@ -175,7 +133,7 @@ def create_monthly_trend_chart(processed_data, output_dir='../chart'):
 def create_recent_years_chart(processed_data, output_dir='../chart', n_years=3):
     """
     创建近 n 年对比图（默认最近3年）。
-    只展示少数年份，线条更清晰，便于短期趋势对比。
+    仅保留7日均线，避免与全量图表和散点图重复。
 
     参数:
     processed_data: 处理后的数据字典
@@ -192,11 +150,6 @@ def create_recent_years_chart(processed_data, output_dir='../chart', n_years=3):
 
     for color, year in zip(colors, recent_years):
         data = processed_data[year]
-        # 原始散点（半透明，衬底）
-        ax.scatter(
-            range(len(data)), data['Passenger_Numbers'],
-            color=color, alpha=0.25, s=6,
-        )
         # 7日均线（主线）
         ax.plot(
             range(len(data)), data['7day_avg'],
@@ -239,7 +192,6 @@ if __name__ == "__main__":
         chart_dir = os.path.join(os.path.dirname(current_dir), 'chart')
         print("开始创建图表...")
         create_7day_moving_average_chart(processed_data, chart_dir)
-        create_yearly_comparison_chart(processed_data, chart_dir)
         create_monthly_trend_chart(processed_data, chart_dir)
         create_recent_years_chart(processed_data, chart_dir)
         print("图表创建完成")
